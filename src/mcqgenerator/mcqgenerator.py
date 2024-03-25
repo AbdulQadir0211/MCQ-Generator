@@ -5,9 +5,12 @@ import pandas as pd
 from dotenv import load_dotenv
 from src.mcqgenerator.utils import read_file,get_table_data
 from src.mcqgenerator.logger import logging
+#from langchain.llms import HuggingFaceHub
+from langchain_community.llms import HuggingFaceHub
 
-
-from langchain.chat_models import ChatOpenAI
+from langchain_community.llms import HuggingFaceEndpoint
+from langchain_community.llms import HuggingFaceEndpoint
+#from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chains import SequentialChain
@@ -16,9 +19,12 @@ from langchain.chains import SequentialChain
 load_dotenv()
 
 # Access the environment variable
-key=os.getenv("OPENAI_API_KEY")
+#key=os.getenv("OPENAI_API_KEY")
+HUGGINGFACEHUB_API_TOKEN=os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
-llm=ChatOpenAI(openai_api_key=key,model_name='gpt-3.5-turbo',temperature=0.7)
+
+#llm=ChatOpenAI(openai_api_key=key,model_name='gpt-3.5-turbo',temperature=0.7)
+llm=HuggingFaceEndpoint(repo_id="google/gemma-7b",temperature=0.5,token=HUGGINGFACEHUB_API_TOKEN)
 
 template="""
 Text:{text}
